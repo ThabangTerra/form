@@ -1,0 +1,293 @@
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    <h1 class="dark-gray-title">Choose Your Protection</h1>
+    <h2 class="light-gray-subtitle">Select the type of insurance you need</h2>
+  </div>
+  <!-- cards component -->
+
+  <div class="row justify-content-center">
+    <div class="col-md-5 mb-4" *ngFor="let card of cards">
+      <app-card
+        [cardData]="card"
+        [isSelected]="selectedCard === card.id"
+        (cardSelected)="onCardSelected(card.id)"
+      >
+      </app-card>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-4" *ngIf="selectedCard">
+    <div class="col-md-8">
+      <div class="card form-card shadow-lg">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="card-title text-primary mb-0">Let's get started</h3>
+            <button
+              type="button"
+              class="btn-close"
+              (click)="closeForm()"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <p class="mb-4">
+            Losing a loved one is never easy and worrying about money should be
+            the last thing on your mind. Get flexible cover that suits your
+            needs, so that things are taken care of during this difficult time.
+          </p>
+
+          <h4 class="mb-3">Main Member</h4>
+          <p class="text-muted mb-4">
+            The main member must be yourself. The main member is the
+            policyholder and the owner of this policy.
+          </p>
+          <!-- form and validation -->
+          <form [formGroup]="insuranceForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+              <div class="col-md-6 position-relative">
+                <input
+                  type="text"
+                  class="form-control floating-input"
+                  id="firstName"
+                  formControlName="firstName"
+                  [class.is-invalid]="shouldShowError('firstName')"
+                  placeholder=" "
+                  aria-label="First Name"
+                  placeholder="FirstName*"
+                />
+
+                <div
+                  class="invalid-feedback"
+                  *ngIf="shouldShowError('firstName')"
+                >
+                  <span
+                    *ngIf="insuranceForm.get('firstName')?.errors?.['required']"
+                  >
+                    First name is required
+                  </span>
+                  <span
+                    *ngIf="insuranceForm.get('firstName')?.errors?.['minlength']"
+                  >
+                    Minimum 2 characters required
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6 position-relative">
+                <input
+                  type="text"
+                  class="form-control floating-input"
+                  id="surname"
+                  formControlName="surname"
+                  [class.is-invalid]="shouldShowError('surname')"
+                  placeholder=" "
+                  aria-label="Surname"
+                  placeholder="Surname*"
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="shouldShowError('surname')"
+                >
+                  <span
+                    *ngIf="insuranceForm.get('surname')?.errors?.['required']"
+                  >
+                    Surname is required
+                  </span>
+                  <span
+                    *ngIf="insuranceForm.get('surname')?.errors?.['minlength']"
+                  >
+                    Minimum 2 characters required
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6 position-relative">
+                <input
+                  type="tel"
+                  class="form-control floating-input"
+                  id="phone"
+                  formControlName="phone"
+                  [class.is-invalid]="shouldShowError('phone')"
+                  placeholder=" "
+                  aria-label="Phone Number (10 digits)"
+                  (keypress)="validatePhone($event)"
+                  maxlength="10"
+                  placeholder="Phone Number*"
+                />
+
+                <div class="invalid-feedback" *ngIf="shouldShowError('phone')">
+                  <span
+                    *ngIf="insuranceForm.get('phone')?.errors?.['required']"
+                  >
+                    Phone number is required
+                  </span>
+                  <span
+                    *ngIf="insuranceForm.get('phone')?.errors?.['pattern'] || 
+                      insuranceForm.get('phone')?.errors?.['minlength'] || 
+                      insuranceForm.get('phone')?.errors?.['maxlength']"
+                  >
+                    Please enter exactly 10 digits
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6 position-relative">
+                <input
+                  type="email"
+                  class="form-control floating-input"
+                  id="email"
+                  formControlName="email"
+                  [class.is-invalid]="shouldShowError('email')"
+                  placeholder=" "
+                  aria-label="Email Address"
+                  placeholder="Email Address*"
+                />
+
+                <div class="invalid-feedback" *ngIf="shouldShowError('email')">
+                  <span
+                    *ngIf="insuranceForm.get('email')?.errors?.['required']"
+                  >
+                    Email is required
+                  </span>
+                  <span *ngIf="insuranceForm.get('email')?.errors?.['email']">
+                    Please enter a valid email address (e.g.,
+                    user&#64;example.com)
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-12">
+                <p class="text-muted small note-text">
+                  PLEASE NOTE: Any updates made to the information provided will
+                  only be used to maintain your Insurance profile and will not
+                  update your core banking profile. Please visit your nearest
+                  branch for assistance in this regard.
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <h4 class="mb-3">Data Privacy</h4>
+                <div class="privacy-notice">
+                  <p>
+                    Please be advised that
+                    <a class="text-primary" target="_blank">standard bank</a>
+                    will process your Personal information collected from
+                    internal and external sources to administer your products
+                    and/or services. This includes all subsidiaries of Standard
+                    Bank Group and Standard Bank South Africa which may engage
+                    with you directly or indirectly as we personalise your
+                    experience.
+                    <span *ngIf="!showFullPrivacy">...</span>
+                  </p>
+
+                  <div *ngIf="showFullPrivacy">
+                    <p>
+                      Our Privacy statement informs you what personal
+                      information is, what personal information we process, how
+                      we process your information, where we collect your
+                      information, who we share your information with, your
+                      rights as a data subject such as the right to access or
+                      object to the processing of your personal information and
+                      the complaints contact details of both Standard Bank and
+                      the Information Regulator. Please be advised that it is
+                      your responsibility to read our privacy statement which is
+                      available on our website at
+                      <a
+                        href="https://www.standardbank.co.za/privacy"
+                        class="text-primary"
+                        target="_blank"
+                        >www.standardbank.co.za/privacy</a
+                      >
+                      and upon request from our branch or consultants.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="btn btn-link p-0 text-primary"
+                    (click)="togglePrivacyNotice()"
+                  >
+                    {{ showFullPrivacy ? "Show less" : "Show more" }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- checkbox for terms and conditions -->
+            <div class="row mb-4">
+              <div class="col-12">
+                <div
+                  class="form-check"
+                  [class.is-invalid]="shouldShowError('privacyConsent')"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="privacyConsent"
+                    formControlName="privacyConsent"
+                    [class.is-invalid]="shouldShowError('privacyConsent')"
+                  />
+                  <label class="form-check-label" for="privacyConsent">
+                    I have read and understood the above and accept the terms of
+                    your
+                    <a class="text-primary" target="_blank"
+                      >Privacy statement.</a
+                    >
+                  </label>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="shouldShowError('privacyConsent')"
+                  >
+                    You must accept the privacy terms to continue
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-12 d-flex justify-content-end gap-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="requestCallback()"
+                >
+                  Call Back
+                </button>
+                <button type="submit" class="btn btn-primary">Next</button>
+              </div>
+            </div>
+          </form>
+          <div *ngIf="isSubmitting" class="row mt-3">
+            <div class="col-12 text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Submitting your information...</p>
+            </div>
+          </div>
+          <footer class="mt-5 py-3 bg-light">
+            <div class="container">
+              <p class="small text-muted">
+                The FAIS Statutory Disclosure contains important information
+                regarding Standard Bank Insurance Brokers. Standard Bank
+                Insurance Brokers (Pty) Ltd ("SBIB") is an authorised financial
+                services provider (FSP 224). SBIB is a related company of The
+                Standard Bank of South Africa Limited ("SBSA"), an authorised
+                FSP (11287) and registered credit provider (NCRCP15). SBSA is a
+                juristic representative of SBIB and is authorised in terms of a
+                written mandate to render intermediary services on SBIB's
+                behalf. The product is underwritten by Liberty Group Limited,
+                Liberty Group Limited is part of the Standard Bank Group and is
+                a licensed life insurer and an Authorised FSP (2409). Terms and
+                conditions, risks and limitations apply.
+              </p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

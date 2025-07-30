@@ -1,0 +1,35 @@
+.navbar-logo {
+  height: 50px;
+}
+
+.profile-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.navbar-nav {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.nav-link{
+    color: white;
+    font-weight: 500;
+}
+
+@media (max-width: 992px) {
+  .navbar-collapse {
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1000;
+    padding: 15px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+  }
+}
+.collapse:not(.show) {
+  display: none;
+}

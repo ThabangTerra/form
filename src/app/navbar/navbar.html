@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <i class="bi bi-shield-lock-fill navbar-icon"></i>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isCollapsed = !isCollapsed"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse"
+      [class.show]="!isCollapsed"
+      id="navbarNavDropdown"
+    >
+      <ul class="navbar-nav me-auto navbar-dark bg-primary">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" ngbDropdownToggle
+            >Life & Personal</a
+          >
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" ngbDropdownToggle
+            >Car & Travel</a
+          >
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" ngbDropdownToggle
+            >Home & Valuables</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Add Protections</a>
+        </li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+</nav>

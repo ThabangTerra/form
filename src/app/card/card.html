@@ -1,0 +1,13 @@
+<div class="card h-100 insurance-card" 
+     [class.selected]="isSelected"
+     (click)="onCardClick()">
+      <div class="card-header">
+      <h3>{{cardData.title}}</h3>
+    </div>
+  <div class="card-body text-center">
+    <img [src]="cardData.imageUrl" alt="{{cardData.title}}" class="card-image">
+  </div>
+</div>
+
+
+
