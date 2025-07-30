@@ -53,12 +53,14 @@ export class MainContent {
     return card ? card.title : '';
   }
 
-  togglePrivacyNotice() {
-    this.showFullPrivacy = !this.showFullPrivacy;
-      if (!this.showFullPrivacy) {
-    this.insuranceForm.get('privacyConsent')?.markAsTouched();
+  togglePrivacyNotice(event?: MouseEvent) {
+ if (event) {
+    event.stopPropagation(); 
+    event.preventDefault(); 
   }
+  this.showFullPrivacy = !this.showFullPrivacy;
   }
+  
 
   closeForm() {
     this.selectedCard = null;
